@@ -1,0 +1,49 @@
+{
+  "name": "tea-rest-es6-boilerplate",
+  "version": "1.0.0",
+  "description": "RESTful API boilerplate based on tea-rest",
+  "main": "index.js",
+  "scripts": {
+    "_test": "export NODE_ENV=test && ./bin/test-init.js && mocha",
+    "test": "npm run lint && nyc --reporter=lcov --reporter=text-summary npm run _test",
+    "lint": "eslint {./app,./bin,./integrations,./test} && echo '\u001b[32m\u001b[1mEslint validate success.\u001b[22m\u001b[39m'",
+    "start": "NODE_ENV=development ./index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tea-node/tea-rest-es6-boilerplate.git"
+  },
+  "keywords": [
+    "RESTful",
+    "API",
+    "Framework",
+    "tea-rest",
+    "koa"
+  ],
+  "author": "baiyu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tea-node/tea-rest-es6-boilerplate/issues"
+  },
+  "homepage": "https://github.com/tea-node/tea-rest-es6-boilerplate#readme",
+  "dependencies": {
+    "async": "^2.6.1",
+    "lodash": "^4.17.11",
+    "md5": "^2.2.1",
+    "moment": "^2.23.0",
+    "restintegration": "^1.0.3",
+    "tea-rest": "^1.1.7",
+    "tea-rest-helper-assert": "^1.0.2",
+    "tea-rest-helper-getter": "^1.0.2",
+    "tea-rest-helper-params": "^1.0.2",
+    "tea-rest-helper-rest": "^1.0.3",
+    "tea-rest-plugin-mysql": "^1.0.4"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "mocha": "^3.0.2",
+    "nyc": "^10.0.0"
+  }
+}
