@@ -19,6 +19,7 @@ const sysAdmin = (msg = 'user must be admin') => {
       });
       return;
     }
+
     await next();
   };
 };
@@ -29,7 +30,7 @@ const ownSelf = (keyPath, allowEmpty, msg = 'user must be owner') => {
   return async (ctx, next) => {
     const id = +U._.get(ctx, keyPath) || 0;
 
-    if (!(allowEmpty && (id === 0))) {
+    if (!allowEmpty && id === 0) {
       ctx.res.forbidden({
         error: {
           code: 403,

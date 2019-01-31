@@ -30,7 +30,10 @@ const list = [
 const modify = [
   helper.getter(User, 'user'),
   helper.assert.exists('hooks.user'),
-  helper.checker.sysAdmin(),
+  [
+    helper.checker.ownSelf('params.id'),
+    helper.checker.sysAdmin(),
+  ],
   helper.user.checkPass(CHECK_PASS_COLS, true, true),
   helper.rest.modify(User, 'user'),
 ];

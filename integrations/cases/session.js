@@ -1,6 +1,7 @@
-// const U = require('../../app/lib/utils');
+const U = require('../../app/lib/utils');
 
-// let enabledToken = '';
+let enabledToken = '';
+
 module.exports = [{
   name: '测试ID = 1的初始用户的登陆',
   uri: '/session',
@@ -15,11 +16,43 @@ module.exports = [{
   },
   expects: {
     Status: 201,
+    JSON: {
+      status: 'success',
+      data: {
+        id: 1,
+        name: 'baiyu',
+        email: '602316022@qq.com',
+        qq: null,
+        wechat: null,
+        role: 'admin',
+        status: 'enabled',
+        language: 'zh',
+        isDelete: 'no',
+        auth: {
+          id: (v, assert) => {
+            assert.equal(typeof v, 'number');
+          },
+          token: (v, assert) => {
+            assert.equal(v.length, 32);
+            assert.equal(typeof v, 'string');
+          },
+          refreshToken: (v, assert) => {
+            assert.equal(v.length, 32);
+            assert.equal(typeof v, 'string');
+          },
+          expiredAt: (v, assert) => {
+            assert.ok(U.moment(v) > U.moment());
+          },
+          onlineIp: '199.199.0.199',
+          creatorId: 1,
+        },
+      },
+      message: null,
+    },
   },
-}];
-/*
-, (last) => {
-  enabledToken = last.auth.token;
+}, (last) => {
+  enabledToken = last.data.auth.token;
+
   return {
     name: '登陆后的token可以获取session接口',
     uri: '/session',
@@ -29,15 +62,19 @@ module.exports = [{
     expects: {
       Status: 200,
       JSON: {
-        id: 1,
-        name: 'baiyu',
-        email: '602316022@qq.com',
-        role: 'admin',
-        status: 'enabled',
-        isDelete: 'no',
-        auth: {
-          token: enabledToken,
+        status: 'success',
+        data: {
+          id: 1,
+          name: 'baiyu',
+          email: '602316022@qq.com',
+          role: 'admin',
+          status: 'enabled',
+          isDelete: 'no',
+          auth: {
+            token: enabledToken,
+          },
         },
+        message: null,
       },
     },
   };
@@ -58,9 +95,13 @@ module.exports = [{
     'X-Auth-Token': enabledToken,
   },
   expects: {
-    Status: 403,
+    Status: 401,
     JSON: {
-      code: 'NotAuthorized',
+      status: 'fail',
+      error: {
+        code: 401,
+        message: 'Token error.',
+      },
       message: 'Token error.',
     },
   },
@@ -78,7 +119,11 @@ module.exports = [{
   expects: {
     Status: 403,
     JSON: {
-      code: 'NotAuthorized',
+      status: 'fail',
+      error: {
+        code: 403,
+        message: 'Password or Email error.',
+      },
       message: 'Password or Email error.',
     },
   },
@@ -96,7 +141,11 @@ module.exports = [{
   expects: {
     Status: 403,
     JSON: {
-      code: 'NotAuthorized',
+      status: 'fail',
+      error: {
+        code: 403,
+        message: 'Password or Email error.',
+      },
       message: 'Password or Email error.',
     },
   },
@@ -114,8 +163,12 @@ module.exports = [{
   expects: {
     Status: 403,
     JSON: {
-      code: 'NotAuthorized',
-      message: '账号或密码错误。',
+      status: 'fail',
+      error: {
+        code: 403,
+        message: 'Password or Email error.',
+      },
+      message: 'Password or Email error.',
     },
   },
 }, {
@@ -128,13 +181,16 @@ module.exports = [{
   expects: {
     Status: 200,
     JSON: {
-      id: 1,
-      name: 'baiyu',
-      email: '602316022@qq.com',
-      role: 'admin',
-      status: 'enabled',
-      isDelete: 'no',
+      status: 'success',
+      data: {
+        id: 1,
+        name: 'baiyu',
+        email: '602316022@qq.com',
+        role: 'admin',
+        status: 'enabled',
+        isDelete: 'no',
+      },
+      message: null,
     },
   },
 }];
-*/

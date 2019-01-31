@@ -87,7 +87,7 @@ describe('helper.checker', () => {
     it('指定错误, allowEmpty = false', (done) => {
       const ctx = {
         params: {
-          userId: '78',
+          userId: '88',
         },
         user: { id: 78 },
         query: {},

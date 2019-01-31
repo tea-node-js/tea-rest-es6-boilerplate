@@ -17,6 +17,5 @@ module.exports = utils.privateIpMerge(switchs, {
    */
   local: [
     '192.168.199.188',
-    '127.0.0.1',
   ],
 });

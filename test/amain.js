@@ -11,8 +11,8 @@ describe('apitest', () => {
 
     it('测试运行完成后的测试用例统计信息', (done) => {
       assert.deepEqual({
-        tests: 3,
-        assertions: 9,
+        tests: 17,
+        assertions: 114,
         failures: 0,
         skipped: 0,
       }, stats);
