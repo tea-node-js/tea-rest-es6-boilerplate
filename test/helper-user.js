@@ -118,7 +118,7 @@ describe('helper.user', () => {
       U.model = name => models[name];
       const _user = {
         id: 1,
-        name: 'Redstone Zhao',
+        name: 'jason',
       };
 
       models.user.checkPass = checkPassSuccess(_user);
@@ -151,7 +151,7 @@ describe('helper.user', () => {
       U.model = name => models[name];
       const _user = {
         id: 1,
-        name: 'Redstone Zhao',
+        name: 'jason',
         toJSON() {
           return { id: this.id, name: this.name };
         },

@@ -7,7 +7,8 @@
     "_test": "export NODE_ENV=test && ./bin/test-init.js && mocha",
     "test": "npm run lint && nyc --reporter=lcov --reporter=text-summary npm run _test",
     "lint": "eslint {./app,./bin,./integrations,./test} && echo '\u001b[32m\u001b[1mEslint validate success.\u001b[22m\u001b[39m'",
-    "start": "NODE_ENV=development ./index.js"
+    "start": "NODE_ENV=development ./index.js",
+    "apidocs": "apidoc -i ./app -o ./docs/apidocs/ -f '.*\\.js$'"
   },
   "repository": {
     "type": "git",
@@ -40,10 +41,17 @@
     "tea-rest-plugin-mysql": "^1.0.5"
   },
   "devDependencies": {
+    "apidoc": "^0.17.7",
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "mocha": "^3.0.2",
     "nyc": "^10.0.0"
+  },
+  "apidoc": {
+    "name": "tea-rest-es-boilerplate-api-docs",
+    "description": "Documents of API v1",
+    "title": "API documents of tea-rest boilerplate",
+    "version": "1.0.0"
   }
 }

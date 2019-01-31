@@ -77,8 +77,8 @@ module.exports = [{
   uri: '/users',
   method: 'post',
   data: {
-    name: 'StonePHP',
-    email: '269718799@qq.com',
+    name: 'baiyu',
+    email: '602316022@qq.com@qq.com',
     password: '123457',
   },
   expects: {
@@ -100,8 +100,8 @@ module.exports = [{
     'X-Auth-Token': 'MOCK::2',
   },
   data: {
-    name: 'StonePHP',
-    email: '269718799@qq.com',
+    name: 'baiyu',
+    email: '602316022@qq.com@qq.com',
     password: '123457',
   },
   expects: {
