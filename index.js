@@ -10,6 +10,9 @@ const config = require('./app/configs');
 const { service } = config;
 const { name, host, port } = service;
 
+const cache = config.cache || {};
+U.cached.init(cache.port, cache.host, cache.opts);
+
 const env = process.env.NODE_ENV || 'development';
 
 U.rest

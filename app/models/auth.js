@@ -7,7 +7,7 @@ const USER_NO_EXISTS = Error('User dont exists.');
 const USER_STATUS_ERROR = Error('User had disabled.');
 const USER_DELETED_ERROR = Error('User had deleted.');
 
-const readUserByToken = (token, callback) => {
+let readUserByToken = (token, callback) => {
   U.model('auth').findByToken(token).then((auth) => {
     if (!auth) return callback(TOKEN_ERROR);
     return U.model('user').findById(auth.creatorId).then((user) => {
@@ -21,11 +21,10 @@ const readUserByToken = (token, callback) => {
   }).catch(callback);
 };
 
-/* open-cache 是否初始化了
+/* tea-cache 是否初始化了 */
 if (U.cached.inited) {
   readUserByToken = U.cached('Token::{0}', readUserByToken, 300);
 }
-*/
 
 const asyncReadUserByToken = U.util.promisify(readUserByToken);
 
@@ -89,9 +88,6 @@ module.exports = (sequelize) => {
           }).catch(reject);
         });
       },
-
-      /** 让这个函数具有cache的能力,减少对token和user表的读取 */
-      readUserByToken: asyncReadUserByToken,
       async addAuth(user, onlineIp) {
         const auth = await Auth.generator(user, onlineIp);
         return auth;
@@ -107,6 +103,8 @@ module.exports = (sequelize) => {
           creatorId: user.id,
         });
       },
+      /** 让这个函数具有cache的能力,减少对token和user表的读取 */
+      readUserByToken: asyncReadUserByToken,
     },
 
     hooks: {

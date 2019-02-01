@@ -33,6 +33,7 @@
     "md5": "^2.2.1",
     "moment": "^2.23.0",
     "restintegration": "^1.0.3",
+    "tea-cache": "0.0.3",
     "tea-rest": "^1.1.8",
     "tea-rest-helper-assert": "^1.0.3",
     "tea-rest-helper-getter": "^1.0.3",

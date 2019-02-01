@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
 const { exec } = require('child_process');
-// const U = require('../app/lib/utils');
+const U = require('../app/lib/utils');
 const config = require('../app/configs/config.test');
 
 const strfile = `${__dirname}/../app/configs/table.sql`;
 const datafile = `${__dirname}/../app/configs/test-data.sql`;
 const db = config.db || {};
-// const cache = config.cache || {};
+const cache = config.cache || {};
 
 let mysqlAuth = `mysql -h${db.host} -u${db.user} -P ${db.port}`;
 
@@ -26,9 +26,7 @@ const execSQL = () => (
   })
 );
 
-execSQL();
-
-/* flushRedis
+// flushRedis
 U.cached.init(cache.port, cache.host, cache.opts);
 U.cached.flush('*', (error) => {
   if (error) {
@@ -37,4 +35,3 @@ U.cached.flush('*', (error) => {
   }
   return execSQL();
 });
-*/
