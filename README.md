@@ -16,6 +16,7 @@ tea-rest es6 boilerplate
 - [x] [tea-rest-helper-rest@1.x.x](https://github.com/tea-node-js/tea-rest-helper-rest)
 - [x] [tea-rest-helper-assert@1.x.x](https://github.com/tea-node-js/tea-rest-helper-assert)
 - [x] [tea-rest-helper-params@1.x.x](https://github.com/tea-node-js/tea-rest-helper-params)
+- [x] [tea-cache@1.x.x](https://github.com/tea-node-js/tea-cache)
 - [x] [restintegration@1.x.x](https://github.com/tea-node-js/restintegration)
 - [x] [Mochajs](https://mochajs.org/)
 
@@ -23,4 +24,5 @@ tea-rest es6 boilerplate
   * `lint` Exec eslint validate use airbnb rule
   * `_test` Only exec test, without coverage report & eslint
   * `test` Run test unit case && api test case then output coverage report
+  * `apidocs` Make api docs, base on apidocs
   * `start` Start rest api with development mode
