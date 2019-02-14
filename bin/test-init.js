@@ -17,6 +17,7 @@ const command = [
   `${mysqlAuth} ${db.name} < ${datafile}`
 ].join('\n');
 
+/* eslint no-console: 0 */
 const execSQL = () =>
   exec(command, (error, stdout, stderr) => {
     if (error) throw error;

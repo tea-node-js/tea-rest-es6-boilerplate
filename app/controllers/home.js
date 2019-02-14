@@ -4,8 +4,6 @@ const config = require('../configs');
 const sayHi = (name, service, ip, now) =>
   `Hello ${name}, This is ${service}, Your ip: ${ip}, Now: ${now}.`;
 
-console.log('abc');
-
 const index = async ctx => {
   const userName = ctx.user.name || ctx.user.username || 'guest';
 

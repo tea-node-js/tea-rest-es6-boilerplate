@@ -9,7 +9,7 @@
         "props": false
       }
     ],
-    "no-console": 0,
+    "no-console": 2,
     "no-debugger": 1,
     "no-var": 1,
     "semi": [1, "always"],
