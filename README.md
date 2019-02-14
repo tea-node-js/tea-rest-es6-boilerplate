@@ -1,7 +1,9 @@
 # tea-rest-es6-boilerplate
+
 tea-rest es6 boilerplate
 
 ## Quick start
+
 <pre>
   git clone https://github.com/tea-node-js/tea-rest-es6-boilerplate.git yourApp
   cd yourApp
@@ -9,6 +11,7 @@ tea-rest es6 boilerplate
 </pre>
 
 ## Feature list
+
 - [x] [eslint airbnb](https://github.com/airbnb/javascript)
 - [x] [tea-rest@1.x.x](https://github.com/tea-node-js/tea-rest)
 - [x] [tea-rest-with-mysql@1.x.x](https://github.com/tea-node-js/tea-rest-with-mysql)
@@ -19,10 +22,12 @@ tea-rest es6 boilerplate
 - [x] [tea-cache@1.x.x](https://github.com/tea-node-js/tea-cache)
 - [x] [restintegration@1.x.x](https://github.com/tea-node-js/restintegration)
 - [x] [Mochajs](https://mochajs.org/)
+- [x] [prettier](https://prettier.io/)
 
-## npm run *
-  * `lint` Exec eslint validate use airbnb rule
-  * `_test` Only exec test, without coverage report & eslint
-  * `test` Run test unit case && api test case then output coverage report
-  * `apidocs` Make api docs, base on apidocs
-  * `start` Start rest api with development mode
+## npm run \*
+
+- `lint` Exec eslint validate use airbnb rule
+- `_test` Only exec test, without coverage report & eslint
+- `test` Run test unit case && api test case then output coverage report
+- `apidocs` Make api docs, base on apidocs
+- `start` Start rest api with development mode
