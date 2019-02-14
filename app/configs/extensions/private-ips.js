@@ -1,4 +1,4 @@
-const utils = require("../../lib/utils");
+const utils = require('../../lib/utils');
 
 /**
  * 这里将IP私有客户端的权限大概归类为一下几种，
@@ -6,7 +6,7 @@ const utils = require("../../lib/utils");
  * groupName: [switch1, switch2]
  */
 const switchs = {
-  local: ["users"]
+  local: ['users']
 };
 
 /** groupName: [ip1, ip2] */
@@ -15,5 +15,5 @@ module.exports = utils.privateIpMerge(switchs, {
    * 范例，同时做测试用
    * @zhaoxiongfei
    */
-  local: ["192.168.199.188"]
+  local: ['192.168.199.188']
 });
