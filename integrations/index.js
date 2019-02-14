@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
-const Restintegration = require("restintegration");
-const config = require("../app/configs/config.test");
-const options = require("./options");
+const Restintegration = require('restintegration');
+const config = require('../app/configs/config.test');
+const options = require('./options');
 
 module.exports = done => {
   const opts = options(config);

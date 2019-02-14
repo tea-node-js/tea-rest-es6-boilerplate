@@ -19,12 +19,7 @@
     "no-alert": 0,
     "no-lone-blocks": 0,
     "no-restricted-syntax": 0,
-    "prettier/prettier": [
-      "error",
-      {
-        "singleQuote": true
-      }
-    ]
+    "prettier/prettier": "error"
   },
   "plugins": ["prettier"],
   "env": {
