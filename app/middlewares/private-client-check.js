@@ -1,4 +1,4 @@
-const U = require("../lib/utils");
+const U = require('../lib/utils');
 
 /** 直接拒绝 */
 const noAllow = () => false;
@@ -8,7 +8,7 @@ const checker = switchs => name => {
   if (!switchs) return false;
   if (!name) return false;
   /** 星号通配所有允许的接口 */
-  if (switchs === "*") return true;
+  if (switchs === '*') return true;
   return switchs.includes(name);
 };
 

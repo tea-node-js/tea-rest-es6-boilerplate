@@ -1,20 +1,20 @@
-const U = require("../lib/utils");
+const U = require('../lib/utils');
 
 const PRIVATEIPGUEST = Object.freeze({
   id: 0,
-  name: "Private client"
+  name: 'Private client'
 });
 
 const GUEST = Object.freeze({
   id: 0,
-  name: "Guest"
+  name: 'Guest'
 });
 
 /**
  * user middleware
  */
 module.exports = guestAllowPaths => {
-  const Auth = U.model("auth");
+  const Auth = U.model('auth');
   const checkGuest = U._.memoize(apiPath => guestAllowPaths.has(apiPath));
 
   return async (ctx, next) => {
@@ -30,7 +30,7 @@ module.exports = guestAllowPaths => {
       }
 
       if (!ctx.user) {
-        const error = Error("user not authorized");
+        const error = Error('user not authorized');
         ctx.res.unauthorized({
           error: {
             code: 401,
@@ -48,7 +48,7 @@ module.exports = guestAllowPaths => {
     try {
       const user = await Auth.readUserByToken(token);
       ctx.user = user;
-      ctx.isAdmin = user.role === "admin";
+      ctx.isAdmin = user.role === 'admin';
       await next();
     } catch (error) {
       ctx.res.unauthorized({

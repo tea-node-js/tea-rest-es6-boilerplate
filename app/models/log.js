@@ -1,55 +1,55 @@
-const U = require("../lib/utils");
-const ModelBase = require("./base");
+const U = require('../lib/utils');
+const ModelBase = require('./base');
 
 const { Sequelize } = U.rest;
 
 module.exports = sequelize => {
   const Log = U._.extend(
     sequelize.define(
-      "log",
+      'log',
       {
         id: {
-          type: Sequelize.type("integer.unsigned"),
+          type: Sequelize.type('integer.unsigned'),
           primaryKey: true,
           autoIncrement: true
         },
         verb: {
-          type: Sequelize.type("string", 10),
+          type: Sequelize.type('string', 10),
           allowNull: false,
-          comment: "请求动作"
+          comment: '请求动作'
         },
         uri: {
-          type: Sequelize.type("string", 1024),
+          type: Sequelize.type('string', 1024),
           allowNull: false,
-          comment: "请求的路径"
+          comment: '请求的路径'
         },
         userId: {
-          type: Sequelize.type("uuid"),
+          type: Sequelize.type('uuid'),
           allowNull: false,
           defaultValue: 0,
-          comment: "请求用户id"
+          comment: '请求用户id'
         },
         statusCode: {
-          type: Sequelize.type("integer"),
+          type: Sequelize.type('integer'),
           allowNull: false,
-          comment: "请求状态， 2xx， 4xx, 5xx"
+          comment: '请求状态， 2xx， 4xx, 5xx'
         },
         clientIp: {
-          type: Sequelize.type("string", 15),
+          type: Sequelize.type('string', 15),
           allowNull: false,
-          comment: "请求来源IP"
+          comment: '请求来源IP'
         },
         params: {
-          type: Sequelize.type("text"),
-          comment: "请求的参数数据"
+          type: Sequelize.type('text'),
+          comment: '请求的参数数据'
         },
         response: {
-          type: Sequelize.type("text"),
-          comment: "请求返回的内容"
+          type: Sequelize.type('text'),
+          comment: '请求返回的内容'
         }
       },
       {
-        comment: "写操作日志表",
+        comment: '写操作日志表',
         freezeTableName: true,
         instanceMethods: {},
         classMethods: {},
@@ -60,8 +60,8 @@ module.exports = sequelize => {
     ModelBase,
     {
       sort: {
-        default: "id",
-        allow: ["id", "verb", "userId", "statusCode", "createdAt"]
+        default: 'id',
+        allow: ['id', 'verb', 'userId', 'statusCode', 'createdAt']
       },
       writableCols: []
     }

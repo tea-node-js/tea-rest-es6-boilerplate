@@ -1,13 +1,13 @@
-const util = require("util");
-const fs = require("fs");
-const path = require("path");
-const _ = require("lodash");
-const moment = require("moment");
-const async = require("async");
-const rest = require("tea-rest");
-const cached = require("tea-cache");
-const md5 = require("md5");
-const teaRestPluginMysql = require("tea-rest-plugin-mysql");
+const util = require('util');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
+const moment = require('moment');
+const async = require('async');
+const rest = require('tea-rest');
+const cached = require('tea-cache');
+const md5 = require('md5');
+const teaRestPluginMysql = require('tea-rest-plugin-mysql');
 
 const U = {};
 
@@ -38,7 +38,7 @@ const utils = Object.assign(
          * 全部功能的暂时先跳过，后续单独处理
          *  因为担心其被其他的权限覆盖
          */
-        if (key === "*") return;
+        if (key === '*') return;
         for (const ip of ips) {
           ret[ip] = ret[ip] ? ret[ip].concat(switchs[key]) : switchs[key];
         }
@@ -46,9 +46,9 @@ const utils = Object.assign(
       U._.each(ret, (v, k) => {
         ret[k] = U._.uniq(v);
       });
-      if (obj["*"]) {
-        for (const ip of obj["*"]) {
-          ret[ip] = "*";
+      if (obj['*']) {
+        for (const ip of obj['*']) {
+          ret[ip] = '*';
         }
       }
       return ret;
@@ -60,7 +60,7 @@ const utils = Object.assign(
       if (!matches) return null;
       return {
         type: matches[1],
-        data: Buffer.from(matches[2], "base64")
+        data: Buffer.from(matches[2], 'base64')
       };
     },
     mkdirp: dir => {

@@ -1,23 +1,23 @@
-const U = require("../lib/utils");
-const ModelBase = require("./base");
+const U = require('../lib/utils');
+const ModelBase = require('./base');
 
 const { Sequelize } = U.rest;
-const TOKEN_ERROR = Error("Token error.");
-const USER_NO_EXISTS = Error("User dont exists.");
-const USER_STATUS_ERROR = Error("User had disabled.");
-const USER_DELETED_ERROR = Error("User had deleted.");
+const TOKEN_ERROR = Error('Token error.');
+const USER_NO_EXISTS = Error('User dont exists.');
+const USER_STATUS_ERROR = Error('User had disabled.');
+const USER_DELETED_ERROR = Error('User had deleted.');
 
 let readUserByToken = (token, callback) => {
-  U.model("auth")
+  U.model('auth')
     .findByToken(token)
     .then(auth => {
       if (!auth) return callback(TOKEN_ERROR);
-      return U.model("user")
+      return U.model('user')
         .findById(auth.creatorId)
         .then(user => {
           if (!user) return callback(USER_NO_EXISTS);
-          if (user.status === "disabled") return callback(USER_STATUS_ERROR);
-          if (user.isDelete === "yes") return callback(USER_DELETED_ERROR);
+          if (user.status === 'disabled') return callback(USER_STATUS_ERROR);
+          if (user.isDelete === 'yes') return callback(USER_DELETED_ERROR);
           const json = user.toJSON();
           json.auth = auth.toJSON();
           return callback(null, json);
@@ -29,7 +29,7 @@ let readUserByToken = (token, callback) => {
 
 /* tea-cache 是否初始化了 */
 if (U.cached.inited) {
-  readUserByToken = U.cached("Token::{0}", readUserByToken, 300);
+  readUserByToken = U.cached('Token::{0}', readUserByToken, 300);
 }
 
 const asyncReadUserByToken = U.util.promisify(readUserByToken);
@@ -37,49 +37,49 @@ const asyncReadUserByToken = U.util.promisify(readUserByToken);
 module.exports = sequelize => {
   const Auth = U._.extend(
     sequelize.define(
-      "auth",
+      'auth',
       {
         id: {
-          type: Sequelize.type("integer.unsigned"),
+          type: Sequelize.type('integer.unsigned'),
           primaryKey: true,
           autoIncrement: true
         },
         token: {
-          type: Sequelize.type("string", 32),
+          type: Sequelize.type('string', 32),
           allowNull: false,
           unique: true,
-          comment: "存放 token"
+          comment: '存放 token'
         },
         refreshToken: {
-          type: Sequelize.type("string", 32),
+          type: Sequelize.type('string', 32),
           allowNull: false,
           unique: true,
-          comment: "refreshToken"
+          comment: 'refreshToken'
         },
         expiredAt: {
-          type: Sequelize.type("date"),
+          type: Sequelize.type('date'),
           allowNull: false,
-          comment: "过期时间"
+          comment: '过期时间'
         },
         onlineIp: {
-          type: Sequelize.type("string", 15),
+          type: Sequelize.type('string', 15),
           allowNull: false,
-          comment: "创建者即登陆者IP"
+          comment: '创建者即登陆者IP'
         },
         creatorId: {
-          type: Sequelize.type("integer.unsigned"),
+          type: Sequelize.type('integer.unsigned'),
           allowNull: false,
-          comment: "创建者，即关联用户"
+          comment: '创建者，即关联用户'
         }
       },
       {
-        comment: "登陆授权表",
+        comment: '登陆授权表',
         freezeTableName: true,
         instanceMethods: {},
         classMethods: {
           findByToken(token) {
             /** 常规模式，到 auth 表根据 token 查询 */
-            if (!(U.isTest && token.substr(0, 6) === "MOCK::")) {
+            if (!(U.isTest && token.substr(0, 6) === 'MOCK::')) {
               return this.findOne({
                 where: {
                   token,
@@ -90,13 +90,13 @@ module.exports = sequelize => {
 
             /** 用户信息的mock, 方便apitest模式下对各种身份用户的mock */
             return new Promise((reslove, reject) => {
-              U.model("user")
+              U.model('user')
                 .findById(token.substr(6))
                 .then(user => {
                   if (!user) return reject(USER_NO_EXISTS);
-                  if (user.status === "disabled") return reject(USER_NO_EXISTS);
-                  if (user.isDelete === "yes") return reject(USER_NO_EXISTS);
-                  return reslove(Auth.generator(user, "127.0.0.1"));
+                  if (user.status === 'disabled') return reject(USER_NO_EXISTS);
+                  if (user.isDelete === 'yes') return reject(USER_NO_EXISTS);
+                  return reslove(Auth.generator(user, '127.0.0.1'));
                 })
                 .catch(reject);
             });
@@ -111,7 +111,7 @@ module.exports = sequelize => {
             return Auth.create({
               token: U.randStr(32),
               refreshToken: U.randStr(32),
-              expiredAt: U.moment().add(1, "days"),
+              expiredAt: U.moment().add(1, 'days'),
               onlineIp,
               creatorId: user.id
             });
@@ -133,8 +133,8 @@ module.exports = sequelize => {
     ModelBase,
     {
       sort: {
-        default: "id",
-        allow: ["id", "name", "updatedAt", "createdAt"]
+        default: 'id',
+        allow: ['id', 'name', 'updatedAt', 'createdAt']
       }
     }
   );

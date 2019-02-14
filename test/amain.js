@@ -1,15 +1,15 @@
-const assert = require("assert");
-const integrations = require("../integrations");
+const assert = require('assert');
+const integrations = require('../integrations');
 
-require("../");
+require('../');
 
 /* global describe it */
-describe("apitest", () => {
-  describe("#run api test case", () => {
+describe('apitest', () => {
+  describe('#run api test case', () => {
     const stats = {};
     integrations(s => Object.assign(stats, s));
 
-    it("测试运行完成后的测试用例统计信息", done => {
+    it('测试运行完成后的测试用例统计信息', done => {
       assert.deepEqual(
         {
           tests: 17,

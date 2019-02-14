@@ -8,7 +8,7 @@ module.exports = {
 
   /** sort 设定 */
   sort: {
-    default: "id",
-    allow: ["id", "createdAt", "updatedAt"]
+    default: 'id',
+    allow: ['id', 'createdAt', 'updatedAt']
   }
 };

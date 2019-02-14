@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const { exec } = require("child_process");
-const U = require("../app/lib/utils");
-const config = require("../app/configs/config.test");
+const { exec } = require('child_process');
+const U = require('../app/lib/utils');
+const config = require('../app/configs/config.test');
 
 const strfile = `${__dirname}/../app/configs/table.sql`;
 const datafile = `${__dirname}/../app/configs/test-data.sql`;
@@ -15,7 +15,7 @@ if (db.pass) mysqlAuth += ` -p'${db.pass}'`;
 const command = [
   `${mysqlAuth} ${db.name} < ${strfile}`,
   `${mysqlAuth} ${db.name} < ${datafile}`
-].join("\n");
+].join('\n');
 
 const execSQL = () =>
   exec(command, (error, stdout, stderr) => {
@@ -27,7 +27,7 @@ const execSQL = () =>
 
 // flushRedis
 U.cached.init(cache.port, cache.host, cache.opts);
-U.cached.flush("*", error => {
+U.cached.flush('*', error => {
   if (error) {
     console.error(error, error.stack);
     return process.exit(0);

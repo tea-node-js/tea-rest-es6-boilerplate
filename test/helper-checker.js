@@ -1,10 +1,10 @@
-const assert = require("assert");
-const checker = require("../app/controllers/helper/checker");
+const assert = require('assert');
+const checker = require('../app/controllers/helper/checker');
 
 /* global describe it */
-describe("helper.checker", () => {
-  describe("#sysAdmin", () => {
-    it("未指定错误", done => {
+describe('helper.checker', () => {
+  describe('#sysAdmin', () => {
+    it('未指定错误', done => {
       const ctx = {
         query: {},
         params: {},
@@ -14,11 +14,11 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "user must be admin"
+                message: 'user must be admin'
               },
               error
             );
-            assert.equal("user must be admin", message);
+            assert.equal('user must be admin', message);
           }
         }
       };
@@ -32,7 +32,7 @@ describe("helper.checker", () => {
       });
     });
 
-    it("指定错误", done => {
+    it('指定错误', done => {
       const ctx = {
         query: {},
         params: {},
@@ -42,16 +42,16 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "您不是管理员，不能执行该操作"
+                message: '您不是管理员，不能执行该操作'
               },
               error
             );
-            assert.equal("您不是管理员，不能执行该操作", message);
+            assert.equal('您不是管理员，不能执行该操作', message);
           }
         }
       };
 
-      const check = checker.sysAdmin("您不是管理员，不能执行该操作");
+      const check = checker.sysAdmin('您不是管理员，不能执行该操作');
       check(ctx);
 
       ctx.isAdmin = true;
@@ -61,11 +61,11 @@ describe("helper.checker", () => {
     });
   });
 
-  describe("#ownSelf", () => {
-    it("未指定错误, allowEmpty = false", done => {
+  describe('#ownSelf', () => {
+    it('未指定错误, allowEmpty = false', done => {
       const ctx = {
         params: {
-          userId: "88"
+          userId: '88'
         },
         user: { id: 78 },
         query: {},
@@ -74,23 +74,23 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "user must be owner"
+                message: 'user must be owner'
               },
               error
             );
-            assert.equal("user must be owner", message);
+            assert.equal('user must be owner', message);
             done();
           }
         }
       };
-      const ownSelf = checker.ownSelf("params.userId", false);
+      const ownSelf = checker.ownSelf('params.userId', false);
       ownSelf(ctx);
     });
 
-    it("指定错误, allowEmpty = false", done => {
+    it('指定错误, allowEmpty = false', done => {
       const ctx = {
         params: {
-          userId: "88"
+          userId: '88'
         },
         user: { id: 78 },
         query: {},
@@ -99,26 +99,26 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "不是您的资源，不能执行该操作"
+                message: '不是您的资源，不能执行该操作'
               },
               error
             );
-            assert.equal("不是您的资源，不能执行该操作", message);
+            assert.equal('不是您的资源，不能执行该操作', message);
             done();
           }
         }
       };
 
       const ownSelf = checker.ownSelf(
-        "params.userId",
+        'params.userId',
         false,
-        "不是您的资源，不能执行该操作"
+        '不是您的资源，不能执行该操作'
       );
 
       ownSelf(ctx);
     });
 
-    it("未指定错误, allowEmpty = true", done => {
+    it('未指定错误, allowEmpty = true', done => {
       const ctx = {
         params: {
           userId: 88
@@ -130,20 +130,20 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "user must be owner"
+                message: 'user must be owner'
               },
               error
             );
-            assert.equal("user must be owner", message);
+            assert.equal('user must be owner', message);
             done();
           }
         }
       };
-      const ownSelf = checker.ownSelf("params.userId", true);
+      const ownSelf = checker.ownSelf('params.userId', true);
       ownSelf(ctx);
     });
 
-    it("指定错误, allowEmpty = true", done => {
+    it('指定错误, allowEmpty = true', done => {
       const ctx = {
         params: {
           userId: 88
@@ -155,24 +155,24 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "不是您的资源，不能执行该操作"
+                message: '不是您的资源，不能执行该操作'
               },
               error
             );
-            assert.equal("不是您的资源，不能执行该操作", message);
+            assert.equal('不是您的资源，不能执行该操作', message);
             done();
           }
         }
       };
       const ownSelf = checker.ownSelf(
-        "params.userId",
+        'params.userId',
         true,
-        "不是您的资源，不能执行该操作"
+        '不是您的资源，不能执行该操作'
       );
       ownSelf(ctx);
     });
 
-    it("allowEmpty = true", done => {
+    it('allowEmpty = true', done => {
       const ctx = {
         params: {
           userId: 0
@@ -180,15 +180,15 @@ describe("helper.checker", () => {
         user: { id: 0 },
         query: {}
       };
-      const ownSelf = checker.ownSelf("params.userId", true);
+      const ownSelf = checker.ownSelf('params.userId', true);
       ownSelf(ctx, () => {
         done();
       });
     });
   });
 
-  describe("#privateSwitch", () => {
-    it("未指定错误", done => {
+  describe('#privateSwitch', () => {
+    it('未指定错误', done => {
       const ctx = {
         allowPrivateSwitch() {
           return false;
@@ -200,23 +200,23 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "no private switch authorized"
+                message: 'no private switch authorized'
               },
               error
             );
-            assert.equal("no private switch authorized", message);
+            assert.equal('no private switch authorized', message);
 
             done();
           }
         }
       };
 
-      const privateSwitch = checker.privateSwitch("users");
+      const privateSwitch = checker.privateSwitch('users');
 
       privateSwitch(ctx);
     });
 
-    it("指定错误", done => {
+    it('指定错误', done => {
       const ctx = {
         allowPrivateSwitch() {
           return false;
@@ -228,11 +228,11 @@ describe("helper.checker", () => {
             assert.deepEqual(
               {
                 code: 403,
-                message: "您没有得到私有客户端授权，不能执行该操作"
+                message: '您没有得到私有客户端授权，不能执行该操作'
               },
               error
             );
-            assert.equal("您没有得到私有客户端授权，不能执行该操作", message);
+            assert.equal('您没有得到私有客户端授权，不能执行该操作', message);
 
             done();
           }
@@ -240,14 +240,14 @@ describe("helper.checker", () => {
       };
 
       const privateSwitch = checker.privateSwitch(
-        "users",
-        "您没有得到私有客户端授权，不能执行该操作"
+        'users',
+        '您没有得到私有客户端授权，不能执行该操作'
       );
 
       privateSwitch(ctx);
     });
 
-    it("成功通过", done => {
+    it('成功通过', done => {
       const ctx = {
         allowPrivateSwitch() {
           return true;
@@ -256,7 +256,7 @@ describe("helper.checker", () => {
         query: {}
       };
 
-      const privateSwitch = checker.privateSwitch("users");
+      const privateSwitch = checker.privateSwitch('users');
 
       privateSwitch(ctx, () => {
         done();

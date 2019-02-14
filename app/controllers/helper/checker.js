@@ -1,4 +1,4 @@
-const U = require("../../lib/utils");
+const U = require('../../lib/utils');
 
 /**
  * checker 所有的方法都可能随时会调用next error
@@ -6,7 +6,7 @@ const U = require("../../lib/utils");
  */
 
 /* 检测当前用户是否为管理员 */
-const sysAdmin = (msg = "user must be admin") => {
+const sysAdmin = (msg = 'user must be admin') => {
   const error = msg instanceof Error ? msg : Error(msg);
   return async (ctx, next) => {
     if (ctx.isAdmin !== true) {
@@ -25,7 +25,7 @@ const sysAdmin = (msg = "user must be admin") => {
 };
 
 /*  检测资源是否属于自己 */
-const ownSelf = (keyPath, allowEmpty, msg = "user must be owner") => {
+const ownSelf = (keyPath, allowEmpty, msg = 'user must be owner') => {
   const error = msg instanceof Error ? msg : Error(msg);
   return async (ctx, next) => {
     const id = +U._.get(ctx, keyPath) || 0;
@@ -57,7 +57,7 @@ const ownSelf = (keyPath, allowEmpty, msg = "user must be owner") => {
 };
 
 /* 检测私有客户端功能 */
-const privateSwitch = (name, msg = "no private switch authorized") => {
+const privateSwitch = (name, msg = 'no private switch authorized') => {
   const error = msg instanceof Error ? msg : Error(msg);
 
   return async (ctx, next) => {
