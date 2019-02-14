@@ -1,20 +1,18 @@
-const U = require('../../lib/utils');
+const U = require("../../lib/utils");
 
 /** 读取session */
-const session = (statusCode = 200) => (
-  async (ctx, next) => {
-    ctx.res.success({
-      data: ctx.user,
-      statusCode,
-    });
-    await next();
-  }
-);
+const session = (statusCode = 200) => async (ctx, next) => {
+  ctx.res.success({
+    data: ctx.user,
+    statusCode
+  });
+  await next();
+};
 
 /** 登陆 */
 const login = () => {
-  const User = U.model('user');
-  const Auth = U.model('auth');
+  const User = U.model("user");
+  const Auth = U.model("auth");
   return async (ctx, next) => {
     const { email, password } = ctx.params;
     try {
@@ -29,9 +27,9 @@ const login = () => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
     }
   };
@@ -39,7 +37,7 @@ const login = () => {
 
 /* 退出 */
 const logout = () => {
-  const Auth = U.model('auth');
+  const Auth = U.model("auth");
 
   return async (ctx, next) => {
     const token = U.getToken(ctx);
@@ -61,24 +59,24 @@ const logout = () => {
 };
 
 const checkPass = (cols, ignoreAdmin, modifyUser) => {
-  const User = U.model('user');
+  const User = U.model("user");
 
   return async (ctx, next) => {
     const { user } = ctx;
     const { origPass } = ctx.params;
     if (!user) {
-      const error = Error('user not found');
+      const error = Error("user not found");
       ctx.res.notFound({
         error: {
           code: 404,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
-    if (ignoreAdmin && (ctx.isAdmin === true)) {
-      if (!(modifyUser && (ctx.user.id === +ctx.params.id))) {
+    if (ignoreAdmin && ctx.isAdmin === true) {
+      if (!(modifyUser && ctx.user.id === +ctx.params.id)) {
         await next();
         return;
       }
@@ -91,13 +89,13 @@ const checkPass = (cols, ignoreAdmin, modifyUser) => {
     }
 
     if (!origPass) {
-      const error = Error('no original pass');
+      const error = Error("no original pass");
       ctx.res.unauthorized({
         error: {
           code: 401,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
@@ -109,9 +107,9 @@ const checkPass = (cols, ignoreAdmin, modifyUser) => {
       ctx.res.unauthorized({
         error: {
           code: 401,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
     }
   };
@@ -121,5 +119,5 @@ module.exports = {
   login,
   logout,
   session,
-  checkPass,
+  checkPass
 };

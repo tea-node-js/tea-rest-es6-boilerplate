@@ -1,87 +1,81 @@
-const assert = require('assert');
-const middle = require('../app/middlewares/private-client-check');
+const assert = require("assert");
+const middle = require("../app/middlewares/private-client-check");
 
 /* global describe it */
-describe('middle private-cient-check', () => {
-  describe('#noraml', () => {
-    it('token exists', (done) => {
+describe("middle private-cient-check", () => {
+  describe("#noraml", () => {
+    it("token exists", done => {
       const ctx = {
         headers: {
-          'x-auth-token': 'Test token',
+          "x-auth-token": "Test token"
         },
         req: {
           connection: {
-            remoteAddress: '192.168.199.188',
-          },
+            remoteAddress: "192.168.199.188"
+          }
         },
-        params: {},
+        params: {}
       };
 
-      const proxyIps = [
-        '127.0.0.1',
-      ];
+      const proxyIps = ["127.0.0.1"];
 
       const privateIps = {
-        '192.168.199.188': ['users'],
+        "192.168.199.188": ["users"]
       };
 
       middle(proxyIps, privateIps)(ctx, () => {
-        assert.equal(false, ctx.allowPrivateSwitch('users'));
+        assert.equal(false, ctx.allowPrivateSwitch("users"));
         done();
       });
     });
 
-    it('token non-exists', (done) => {
+    it("token non-exists", done => {
       const ctx = {
         headers: {},
         req: {
           connection: {
-            remoteAddress: '192.168.199.188',
-          },
+            remoteAddress: "192.168.199.188"
+          }
         },
         params: {},
-        query: {},
+        query: {}
       };
 
-      const proxyIps = [
-        '127.0.0.1',
-      ];
+      const proxyIps = ["127.0.0.1"];
 
       const privateIps = {
-        '192.168.199.188': ['users'],
+        "192.168.199.188": ["users"]
       };
 
       middle(proxyIps, privateIps)(ctx, () => {
-        assert.equal(true, ctx.allowPrivateSwitch('users'));
-        assert.equal(false, ctx.allowPrivateSwitch('user'));
+        assert.equal(true, ctx.allowPrivateSwitch("users"));
+        assert.equal(false, ctx.allowPrivateSwitch("user"));
         done();
       });
     });
 
-    it('token non-exists, switchs unset', (done) => {
+    it("token non-exists, switchs unset", done => {
       const ctx = {
         headers: {},
         req: {
           connection: {
-            remoteAddress: '192.168.199.188',
-          },
+            remoteAddress: "192.168.199.188"
+          }
         },
         params: {},
-        query: {},
+        query: {}
       };
 
-      const proxyIps = [
-        '127.0.0.1',
-      ];
+      const proxyIps = ["127.0.0.1"];
 
       const privateIps = {
-        '192.168.199.188': undefined,
+        "192.168.199.188": undefined
       };
 
       middle(proxyIps, privateIps)(ctx, () => {
-        assert.equal(false, ctx.allowPrivateSwitch('users'));
-        assert.equal(false, ctx.allowPrivateSwitch('user'));
-        assert.equal(false, ctx.allowPrivateSwitch(''));
+        assert.equal(false, ctx.allowPrivateSwitch("users"));
+        assert.equal(false, ctx.allowPrivateSwitch("user"));
+        assert.equal(false, ctx.allowPrivateSwitch(""));
         assert.equal(false, ctx.allowPrivateSwitch(0));
         assert.equal(false, ctx.allowPrivateSwitch(undefined));
         assert.equal(false, ctx.allowPrivateSwitch(null));
@@ -89,30 +83,28 @@ describe('middle private-cient-check', () => {
       });
     });
 
-    it('token non-exists, switchs *', (done) => {
+    it("token non-exists, switchs *", done => {
       const ctx = {
         headers: {},
         req: {
           connection: {
-            remoteAddress: '192.168.199.188',
-          },
+            remoteAddress: "192.168.199.188"
+          }
         },
         params: {},
-        query: {},
+        query: {}
       };
 
-      const proxyIps = [
-        '127.0.0.1',
-      ];
+      const proxyIps = ["127.0.0.1"];
 
       const privateIps = {
-        '192.168.199.188': '*',
+        "192.168.199.188": "*"
       };
 
       middle(proxyIps, privateIps)(ctx, () => {
-        assert.equal(true, ctx.allowPrivateSwitch('users'));
-        assert.equal(true, ctx.allowPrivateSwitch('user'));
-        assert.equal(false, ctx.allowPrivateSwitch(''));
+        assert.equal(true, ctx.allowPrivateSwitch("users"));
+        assert.equal(true, ctx.allowPrivateSwitch("user"));
+        assert.equal(false, ctx.allowPrivateSwitch(""));
         assert.equal(false, ctx.allowPrivateSwitch(0));
         assert.equal(false, ctx.allowPrivateSwitch(undefined));
         assert.equal(false, ctx.allowPrivateSwitch(null));
