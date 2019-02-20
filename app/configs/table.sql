@@ -50,7 +50,7 @@ DROP TABLE IF EXISTS `log`;
 
 CREATE TABLE `log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `verb` varchar(10) NOT NULL,
+  `method` varchar(10) NOT NULL,
   `uri` varchar(1024) NOT NULL,
   `userId` char(36) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '0',
   `statusCode` int(11) NOT NULL,
