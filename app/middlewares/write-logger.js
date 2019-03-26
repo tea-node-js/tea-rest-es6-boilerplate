@@ -21,7 +21,7 @@ module.exports = () => {
     log.statusCode = ctx.status;
     log.clientIp = ctx._clientIp;
     log.userId = ctx.user ? ctx.user.id : 0;
-    log.response = ctx.body;
+    log.response = U._.isObject(ctx.body) ? JSON.stringify(ctx.body) : ctx.body;
 
     await Log.create(log);
   };
