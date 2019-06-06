@@ -8,7 +8,15 @@
     "test": "npm run lint && nyc --reporter=lcov --reporter=text-summary npm run _test",
     "lint": "eslint {./app,./bin,./integrations,./test} && echo '\u001b[32m\u001b[1mEslint validate success.\u001b[22m\u001b[39m'",
     "start": "NODE_ENV=development ./index.js",
-    "apidocs": "apidoc -i ./app -o ./docs/apidocs/ -f '.*\\.js$'"
+    "apidocs": "apidoc -i ./app -o ./docs/apidocs/ -f '.*\\.js$'",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
+      "git add"
+    ]
   },
   "repository": {
     "type": "git",
@@ -42,11 +50,18 @@
   },
   "devDependencies": {
     "apidoc": "^0.17.7",
-    "eslint": "^5.12.0",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0",
     "mocha": "^3.0.2",
-    "nyc": "^10.0.0"
+    "nyc": "^10.0.0",
+    "eslint": "^5.0.0",
+    "eslint-config-ali": "^2.0.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.14.2",
+    "babel-eslint": "^8.1.1",
+    "lint-staged": "^4.0.0",
+    "prettier": "^1.16.4",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-config-prettier": "^4.0.0"
   },
   "apidoc": {
     "name": "tea-rest-es-boilerplate-api-docs",
