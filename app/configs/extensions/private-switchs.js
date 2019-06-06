@@ -7,7 +7,5 @@
  *  ]
  */
 module.exports = {
-  users: [
-    'GET /users',
-  ],
+  users: ['GET /users']
 };

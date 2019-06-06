@@ -1,15 +1,13 @@
 const U = require('../../lib/utils');
 
 /** 读取session */
-const session = (statusCode = 200) => (
-  async (ctx, next) => {
-    ctx.res.success({
-      data: ctx.user,
-      statusCode,
-    });
-    await next();
-  }
-);
+const session = (statusCode = 200) => async (ctx, next) => {
+  ctx.res.success({
+    data: ctx.user,
+    statusCode
+  });
+  await next();
+};
 
 /** 登陆 */
 const login = () => {
@@ -29,9 +27,9 @@ const login = () => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
     }
   };
@@ -71,14 +69,14 @@ const checkPass = (cols, ignoreAdmin, modifyUser) => {
       ctx.res.notFound({
         error: {
           code: 404,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
-    if (ignoreAdmin && (ctx.isAdmin === true)) {
-      if (!(modifyUser && (ctx.user.id === +ctx.params.id))) {
+    if (ignoreAdmin && ctx.isAdmin === true) {
+      if (!(modifyUser && ctx.user.id === +ctx.params.id)) {
         await next();
         return;
       }
@@ -95,9 +93,9 @@ const checkPass = (cols, ignoreAdmin, modifyUser) => {
       ctx.res.unauthorized({
         error: {
           code: 401,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
@@ -109,9 +107,9 @@ const checkPass = (cols, ignoreAdmin, modifyUser) => {
       ctx.res.unauthorized({
         error: {
           code: 401,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
     }
   };
@@ -121,5 +119,5 @@ module.exports = {
   login,
   logout,
   session,
-  checkPass,
+  checkPass
 };

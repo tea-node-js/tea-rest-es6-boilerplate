@@ -13,9 +13,9 @@ const sysAdmin = (msg = 'user must be admin') => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
@@ -34,9 +34,9 @@ const ownSelf = (keyPath, allowEmpty, msg = 'user must be owner') => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
@@ -45,9 +45,9 @@ const ownSelf = (keyPath, allowEmpty, msg = 'user must be owner') => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
@@ -66,18 +66,18 @@ const privateSwitch = (name, msg = 'no private switch authorized') => {
       ctx.res.forbidden({
         error: {
           code: 403,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
       return;
     }
-    await next(); 
+    await next();
   };
 };
 
 module.exports = {
   sysAdmin,
   ownSelf,
-  privateSwitch,
+  privateSwitch
 };

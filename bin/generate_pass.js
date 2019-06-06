@@ -7,4 +7,5 @@ const password = 'baiyu123';
 
 const pass = U.md5(`${salt}${U.md5(password)}${salt}`);
 
+/* eslint no-console: 0 */
 console.log(pass);

@@ -5,6 +5,7 @@ const _ = require('lodash');
 const moment = require('moment');
 const async = require('async');
 const rest = require('tea-rest');
+const cached = require('tea-cache');
 const md5 = require('md5');
 const teaRestPluginMysql = require('tea-rest-plugin-mysql');
 
@@ -12,6 +13,7 @@ const U = {};
 
 U.rest = rest;
 U._ = _;
+U.cached = cached;
 U.md5 = md5;
 U.moment = moment;
 U.async = async;

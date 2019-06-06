@@ -13,10 +13,10 @@ module.exports = sequelize => {
           primaryKey: true,
           autoIncrement: true
         },
-        verb: {
+        method: {
           type: Sequelize.type('string', 10),
           allowNull: false,
-          comment: '请求动作'
+          comment: '请求方法'
         },
         uri: {
           type: Sequelize.type('string', 1024),
@@ -61,7 +61,7 @@ module.exports = sequelize => {
     {
       sort: {
         default: 'id',
-        allow: ['id', 'verb', 'userId', 'statusCode', 'createdAt']
+        allow: ['id', 'method', 'userId', 'statusCode', 'createdAt']
       },
       writableCols: []
     }
