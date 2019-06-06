@@ -12,7 +12,22 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "src/**/*.js": [
+    "app/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
+      "git add"
+    ],
+    "bin/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
+      "git add"
+    ],
+    "test/**/*.js": [
+      "eslint --fix --ext .js",
+      "prettier --write",
+      "git add"
+    ],
+    "integrations/**/*.js": [
       "eslint --fix --ext .js",
       "prettier --write",
       "git add"
