@@ -10,7 +10,8 @@ module.exports = {
     "require-yield": "off",
   },
   "plugins": ["prettier"],
-  "globals": {
-    "React": "readable"
+  "env": {
+    "es6": true,
+    "node": true
   }
 };

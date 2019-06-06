@@ -2,9 +2,7 @@ const U = require('../lib/utils');
 const helper = require('./helper');
 
 const User = U.model('user');
-const CHECK_PASS_COLS = [
-  'email', 'password',
-];
+const CHECK_PASS_COLS = ['email', 'password'];
 
 /**
  * @api {POST} /session 登陆
@@ -37,10 +35,7 @@ const CHECK_PASS_COLS = [
  *   }
  * @apiVersion 1.0.0
  */
-const login = [
-  helper.user.login(),
-  helper.user.session(201),
-];
+const login = [helper.user.login(), helper.user.session(201)];
 
 /**
  * @api {DELETE} /session 退出
@@ -51,9 +46,7 @@ const login = [
  *   HTTP/1.1 204 No Content
  * @apiVersion 1.0.0
  */
-const logout = [
-  helper.user.logout(),
-];
+const logout = [helper.user.logout()];
 
 /**
  * @api {GET} /session 查询 Session
@@ -85,9 +78,7 @@ const logout = [
  *   }
  * @apiVersion 1.0.0
  */
-const session = [
-  helper.user.session(),
-];
+const session = [helper.user.session()];
 
 /**
  * @api {GET} /users 系统用户列表
@@ -120,11 +111,8 @@ const session = [
  * @apiVersion 1.0.0
  */
 const list = [
-  [
-    helper.checker.sysAdmin(),
-    helper.checker.privateSwitch('users'),
-  ],
-  helper.rest.list(User),
+  [helper.checker.sysAdmin(), helper.checker.privateSwitch('users')],
+  helper.rest.list(User)
 ];
 
 /**
@@ -163,12 +151,9 @@ const list = [
 const modify = [
   helper.getter(User, 'user'),
   helper.assert.exists('hooks.user'),
-  [
-    helper.checker.ownSelf('params.id'),
-    helper.checker.sysAdmin(),
-  ],
+  [helper.checker.ownSelf('params.id'), helper.checker.sysAdmin()],
   helper.user.checkPass(CHECK_PASS_COLS, true, true),
-  helper.rest.modify(User, 'user'),
+  helper.rest.modify(User, 'user')
 ];
 
 /**
@@ -185,7 +170,7 @@ const remove = [
   helper.checker.sysAdmin(),
   helper.getter(User, 'user'),
   helper.assert.exists('hooks.user'),
-  helper.rest.remove.hook('user').exec(),
+  helper.rest.remove.hook('user').exec()
 ];
 
 /**
@@ -219,9 +204,8 @@ const remove = [
 const detail = [
   helper.getter(User, 'user'),
   helper.assert.exists('hooks.user'),
-  helper.rest.detail('user'),
+  helper.rest.detail('user')
 ];
-
 
 /**
  * @api {POST} /users 添加用户
@@ -256,10 +240,7 @@ const detail = [
  *   }
  * @apiVersion 1.0.0
  */
-const add = [
-  helper.checker.sysAdmin(),
-  helper.rest.add(User),
-];
+const add = [helper.checker.sysAdmin(), helper.rest.add(User)];
 
 module.exports = {
   login,
@@ -269,5 +250,5 @@ module.exports = {
   modify,
   remove,
   detail,
-  add,
+  add
 };

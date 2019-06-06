@@ -16,36 +16,40 @@ module.exports = {
        * 是否提供 apis 查询，如果提供这里设置为 apis 的请求路径
        * 不设置此属性，或者设置为 null 则不提供 apis 的查询服务
        */
-      apis: '/apis',
-    },
+      apis: '/apis'
+    }
   },
 
   logger: {
     name: 'tea-rest-logger',
-    streams: [{
-      level: 'info',
-      path: `${__dirname}/../../storage/logs/info.log`,
-    }, {
-      level: 'error',
-      path: `${__dirname}/../../storage/logs/error.log`,
-    }, {
-      level: 'warn',
-      path: `${__dirname}/../../storage/logs/warn.log`,
-    }],
+    streams: [
+      {
+        level: 'info',
+        path: `${__dirname}/../../storage/logs/info.log`
+      },
+      {
+        level: 'error',
+        path: `${__dirname}/../../storage/logs/error.log`
+      },
+      {
+        level: 'warn',
+        path: `${__dirname}/../../storage/logs/warn.log`
+      }
+    ]
   },
 
   /** body 解析参数控制 */
   bodyParser: {
     enableTypes: ['json', 'form'],
     formLimit: '10mb',
-    jsonLimit: '10mb',
+    jsonLimit: '10mb'
   },
 
   cors: {
     origin: '*',
     allowMethods: ['GET', 'HEAD', 'PUT', 'POST', 'DELETE', 'PATCH'],
     allowHeaders: ['Content-Type', 'Authorization'],
-    exposeHeaders: ['Content-Length', 'Date', 'X-Request-Id'],
+    exposeHeaders: ['Content-Length', 'Date', 'X-Request-Id']
   },
 
   /** cache 配置信息 */
@@ -53,8 +57,8 @@ module.exports = {
     host: '127.0.0.1',
     port: 6379,
     opts: {
-      namespace: 'ORB',
-    },
+      namespace: 'ORB'
+    }
   },
 
   /**
@@ -62,16 +66,13 @@ module.exports = {
    * 只有这两个服务器过来的请求真实ip才会去获取
    * 用来获取真实的ip，用来控制私有ip的真实性
    */
-  proxyIps: [
-    '127.0.0.1',
-    '172.17.42.1',
-  ],
+  proxyIps: ['127.0.0.1', '172.17.42.1'],
 
   /**
    * 私有接口允许的IP地址白名单
    * 私有IP需要严格限制允许请求的接口, 一般都是只读接口, 禁止开放写接口给私有IP客户端
    * 私有接口开关名称，每个对应一个或多个具体的接口
-  */
+   */
   privateSwitchs,
   privateIps,
 
@@ -89,7 +90,7 @@ module.exports = {
     // 允许登陆
     'POST /session',
     // 允许注册
-    'POST /users',
+    'POST /users'
   ],
 
   /** 允许的语言 */
@@ -100,5 +101,5 @@ module.exports = {
   db,
 
   /* 头像配置 */
-  avatar,
+  avatar
 };

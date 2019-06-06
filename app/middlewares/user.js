@@ -2,18 +2,18 @@ const U = require('../lib/utils');
 
 const PRIVATEIPGUEST = Object.freeze({
   id: 0,
-  name: 'Private client',
+  name: 'Private client'
 });
 
 const GUEST = Object.freeze({
   id: 0,
-  name: 'Guest',
+  name: 'Guest'
 });
 
 /**
  * user middleware
  */
-module.exports = (guestAllowPaths) => {
+module.exports = guestAllowPaths => {
   const Auth = U.model('auth');
   const checkGuest = U._.memoize(apiPath => guestAllowPaths.has(apiPath));
 
@@ -34,9 +34,9 @@ module.exports = (guestAllowPaths) => {
         ctx.res.unauthorized({
           error: {
             code: 401,
-            message: error.message || error.stack,
+            message: error.message || error.stack
           },
-          message: error.message || error.stack,
+          message: error.message || error.stack
         });
         return;
       }
@@ -54,9 +54,9 @@ module.exports = (guestAllowPaths) => {
       ctx.res.unauthorized({
         error: {
           code: 401,
-          message: error.message || error.stack,
+          message: error.message || error.stack
         },
-        message: error.message || error.stack,
+        message: error.message || error.stack
       });
     }
   };
