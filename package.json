@@ -52,17 +52,18 @@
   "homepage": "https://github.com/tea-node-js/tea-rest-es6-boilerplate#readme",
   "dependencies": {
     "async": "^2.6.1",
+    "ioredis": "^4.14.1",
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
     "moment": "^2.23.0",
     "restintegration": "^1.0.3",
-    "tea-cache": "0.0.3",
-    "tea-rest": "^1.1.8",
-    "tea-rest-helper-assert": "^1.0.3",
-    "tea-rest-helper-getter": "^1.0.3",
-    "tea-rest-helper-params": "^1.0.3",
-    "tea-rest-helper-rest": "^1.0.5",
-    "tea-rest-plugin-mysql": "^1.0.5"
+    "tea-cache": "0.1.0",
+    "tea-rest": "^1.1.9",
+    "tea-rest-helper-assert": "^1.0.5",
+    "tea-rest-helper-getter": "^1.0.6",
+    "tea-rest-helper-params": "^1.0.5",
+    "tea-rest-helper-rest": "^1.0.7",
+    "tea-rest-plugin-mysql": "^1.1.1"
   },
   "devDependencies": {
     "apidoc": "^0.17.7",

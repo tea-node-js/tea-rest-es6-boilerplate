@@ -2,7 +2,6 @@ const U = require('../lib/utils');
 const ModelBase = require('./base');
 const config = require('../configs');
 
-const { Sequelize } = U.rest;
 const CHECK_PASS_ERROR = Error('Password or Email error.');
 const USER_STATUS_ERROR = Error('User had disabled.');
 const USER_DELETED_ERROR = Error('User had deleted.');
@@ -15,18 +14,18 @@ const CALC_PASS = user => {
   }
 };
 
-module.exports = sequelize => {
+module.exports = (sequelize, DataTypes) => {
   const User = U._.extend(
     sequelize.define(
       'user',
       {
         id: {
-          type: Sequelize.INTEGER.UNSIGNED,
+          type: DataTypes.INTEGER.UNSIGNED,
           primaryKey: true,
           autoIncrement: true
         },
         name: {
-          type: Sequelize.type('string', 30),
+          type: DataTypes.type('string', 30),
           allowNull: false,
           set(val) {
             this.setDataValue('name', U.nt2space(val));
@@ -36,7 +35,7 @@ module.exports = sequelize => {
           }
         },
         avatar: {
-          type: Sequelize.type('string', 255),
+          type: DataTypes.type('string', 255),
           allowNull: true,
           validate: {
             len: [1, 255]
@@ -62,7 +61,7 @@ module.exports = sequelize => {
           comment: '用户头像'
         },
         email: {
-          type: Sequelize.type('string', 100),
+          type: DataTypes.type('string', 100),
           allowNull: false,
           validate: {
             isEmail: true
@@ -71,7 +70,7 @@ module.exports = sequelize => {
           comment: '用户email地址'
         },
         qq: {
-          type: Sequelize.type('string', 20),
+          type: DataTypes.type('string', 20),
           allowNull: true,
           defaultValue: null,
           validate: {
@@ -80,7 +79,7 @@ module.exports = sequelize => {
           comment: '用户qq号码'
         },
         wechat: {
-          type: Sequelize.type('string', 30),
+          type: DataTypes.type('string', 30),
           allowNull: true,
           defaultValue: null,
           validate: {
@@ -89,34 +88,34 @@ module.exports = sequelize => {
           comment: '用户微信账号'
         },
         password: {
-          type: Sequelize.type('string', 32),
+          type: DataTypes.type('string', 32),
           allowNull: false
         },
         salt: {
-          type: Sequelize.type('string', 20),
+          type: DataTypes.type('string', 20),
           allowNull: false
         },
         role: {
-          type: Sequelize.ENUM,
+          type: DataTypes.ENUM,
           values: ['admin', 'member'],
           defaultValue: 'member',
           allowNull: false
         },
         status: {
-          type: Sequelize.ENUM,
+          type: DataTypes.ENUM,
           values: ['disabled', 'enabled'],
           defaultValue: 'enabled',
           allowNull: false,
           comment: '是否可用'
         },
         language: {
-          type: Sequelize.STRING,
+          type: DataTypes.STRING,
           defaultValue: 'zh',
           allowNull: false,
           comment: '当前用户的语言设置'
         },
         isDelete: {
-          type: Sequelize.ENUM,
+          type: DataTypes.ENUM,
           values: ['yes', 'no'],
           defaultValue: 'no',
           allowNull: false,
@@ -132,49 +131,6 @@ module.exports = sequelize => {
           },
           beforeCreate: CALC_PASS,
           beforeUpdate: CALC_PASS
-        },
-
-        instanceMethods: {
-          /** 这里之所以要单独定义 toJSON 是为了隐藏 salt 和 password 对外 */
-          toJSON() {
-            return U._.omit(this.get(), 'password', 'salt');
-          },
-          calcPass(password) {
-            return U.md5(`${this.salt}${U.md5(password)}${this.salt}`);
-          },
-          checkPass(password) {
-            return this.calcPass(password) === this.password;
-          }
-        },
-
-        classMethods: {
-          async checkPass(email, password) {
-            const where = { email };
-
-            const user = await User.findOne({ where });
-
-            if (!user) throw CHECK_PASS_ERROR;
-
-            if (!user.checkPass(password)) throw CHECK_PASS_ERROR;
-
-            if (user.status === 'disabled') throw USER_STATUS_ERROR;
-
-            if (user.isDelete === 'yes') throw USER_DELETED_ERROR;
-
-            return user;
-          },
-
-          /** 计算头像路径 */
-          avatarPath: (id, type) => {
-            const t = type.split('/');
-            const md5str = U.md5(id);
-            return [
-              'users',
-              md5str.substr(0, 2),
-              md5str.substr(2, 3),
-              `${id}.${t[1] || t}`
-            ].join('/');
-          }
         }
       }
     ),
@@ -203,6 +159,47 @@ module.exports = sequelize => {
       ]
     }
   );
+
+  User.prototype.toJSON = function() {
+    const json = U._.omit(this.get(), 'password', 'salt');
+    return json;
+  };
+
+  User.prototype.calcPass = function(password) {
+    const calcedPass = U.md5(`${this.salt}${U.md5(password)}${this.salt}`);
+    return calcedPass;
+  };
+
+  User.prototype.checkPass = function(password) {
+    return this.calcPass(password) === this.password;
+  };
+
+  User.checkPass = async (email, password) => {
+    const where = { email };
+
+    const user = await User.findOne({ where });
+
+    if (!user) throw CHECK_PASS_ERROR;
+
+    if (!user.checkPass(password)) throw CHECK_PASS_ERROR;
+
+    if (user.status === 'disabled') throw USER_STATUS_ERROR;
+
+    if (user.isDelete === 'yes') throw USER_DELETED_ERROR;
+
+    return user;
+  };
+
+  User.avatarPath = (id, type) => {
+    const t = type.split('/');
+    const md5str = U.md5(id);
+    return [
+      'users',
+      md5str.substr(0, 2),
+      md5str.substr(2, 3),
+      `${id}.${t[1] || t}`
+    ].join('/');
+  };
 
   return User;
 };

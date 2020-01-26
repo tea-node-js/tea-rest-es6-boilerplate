@@ -1,10 +1,18 @@
 const assert = require('assert');
 const U = require('../app/lib/utils');
+const config = require('../app/configs');
 const userModule = require('../app/models/user');
 
 const { Sequelize } = U.rest;
-const sequelize = new Sequelize();
-const User = userModule(sequelize);
+const sequelize = new Sequelize(config.db);
+
+Sequelize.DataTypes.type = (paths, len) => {
+  const fn = U._.get(Sequelize, paths.toUpperCase());
+  if (!fn) throw Error(`Sequelize types non-exists: ${paths}`);
+  return len == null ? fn : fn(len);
+};
+
+const User = userModule(sequelize, Sequelize.DataTypes);
 
 /* global describe it */
 describe('model user', () => {

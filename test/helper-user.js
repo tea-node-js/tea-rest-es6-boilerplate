@@ -2,12 +2,13 @@ const assert = require('assert');
 const teaRestPluginMysql = require('tea-rest-plugin-mysql');
 const user = require('../app/controllers/helper/user');
 const U = require('../app/lib/utils');
+const config = require('../app/configs');
 
 // mock a models
 const mockModels = () => {
   const { Sequelize } = teaRestPluginMysql;
 
-  const sequelize = new Sequelize();
+  const sequelize = new Sequelize(config.db);
 
   const models = {
     auth: sequelize.define('book', {
@@ -28,8 +29,11 @@ const mockModels = () => {
     })
   };
 
-  models.auth.readUserByToken = {
-    removeKey: false
+  const redisDel = U.cache.del;
+
+  U.cache.del = function(key) {
+    console.log('U.cache.del key: ', key);
+    U.cache.del = redisDel;
   };
 
   models.auth.findOne = () => new Promise(resolve => setTimeout(resolve, 10));
@@ -75,7 +79,7 @@ const readUserByTokenError = message => () =>
 /* global describe it */
 describe('helper.user', () => {
   describe('#logout', () => {
-    it('Auth.readUserByToken.removeKey non-exists', done => {
+    it('del token in cache when logout', done => {
       const models = mockModels();
       const uModel = U.model;
       U.model = name => models[name];

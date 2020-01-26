@@ -42,6 +42,7 @@ module.exports = guestAllowPaths => {
       }
 
       await next();
+
       return;
     }
 

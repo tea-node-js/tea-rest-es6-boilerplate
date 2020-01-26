@@ -4,14 +4,15 @@ const getter = require('tea-rest-helper-getter');
 const assert = require('tea-rest-helper-assert');
 const rest = require('tea-rest-helper-rest');
 const params = require('tea-rest-helper-params');
+const Redis = require('ioredis');
+const Cache = require('tea-cache');
 const U = require('./app/lib/utils');
 const config = require('./app/configs');
 
-const { service } = config;
-const { name, host, port } = service;
+const { name, host, port } = config.service;
 
-const cache = config.cache || {};
-U.cached.init(cache.port, cache.host, cache.opts);
+const cache = config.cachel;
+U.cache = new Cache(new Redis(cache), U._);
 
 const env = process.env.NODE_ENV || 'development';
 
